@@ -1,0 +1,80 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		html, body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+		body {
+			background-color: #182945;
+		}
+		#container {
+			margin: 100px;
+		}
+		.tip {
+		    -webkit-border-radius: 50%;
+		    border-radius: 50%;
+		    background-color: #FF0000;
+		    border: 4px solid #0000FF;
+		    height: 10px;
+		    position: absolute;
+		    width: 10px;
+		    z-index: 50;
+		}
+		.tip-content {
+			position: absolute;
+			background-color: #fff;
+			border: 1px solid #999;
+			padding: 15px;
+			display: none;
+			z-index: 45;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<img id="imgTipy" src="otok_bg.png">
+		<ul id="imgTipyCoords">
+			<li xAxis="177" yAxis="285"><p>Hello, I'm content of this tip!</p></li>
+			<li xAxis="132" yAxis="345"><p>Hello, I'm content of another tip!</p></li>
+		</ul>
+	</div>
+
+	<div id="pointer_div" onclick="point_it(event)" style = "background-image:url('otok_bg.png');width:441px;height:456px;position:relative;">
+		<span id="cross" style="position:absolute;visibility:hidden;z-index:2;">X</span>
+	</div>
+	<form name="pointform" method="post">
+	You pointed on x = <input type="text" name="form_x" size="4" /> - y = <input type="text" name="form_y" size="4" />
+	</form>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="imgtipy.js"></script>
+	<script type="text/javascript">
+	//$(document).ready(function(){
+		$('#imgTipy').imgTipy({
+			//coords: '#imgCoords'
+		});
+	//});
+	</script>
+	<script type="text/javascript">
+	// HELPER
+	function point_it(event){
+		pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("pointer_div").offsetLeft;
+		pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("pointer_div").offsetTop;
+		console.log(pos_y);
+		height = document.getElementById("pointer_div").style.height;
+		height = parseInt(height.substring(0, height.length-2 ));
+		pos_y = height-pos_y;
+		console.log(height);
+		document.getElementById("cross").style.left = (pos_x-4) ;
+		document.getElementById("cross").style.bottom = (pos_y-10) ;
+		document.getElementById("cross").style.visibility = "visible" ;
+		document.pointform.form_x.value = pos_x;
+		document.pointform.form_y.value = pos_y;
+	}
+	</script>
+</body>
+</html>
